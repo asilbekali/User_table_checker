@@ -1,5 +1,4 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 interface UserType {
     key: React.Key;
@@ -26,8 +25,11 @@ const selectedUsersSlice = createSlice({
         clearSelectedUsers: (state) => {
             state.selectedUsers = [];
         },
+        removeUser: (state, action: PayloadAction<React.Key>) => {
+            state.selectedUsers = state.selectedUsers.filter(user => user.key !== action.payload);
+        }
     },
 });
 
-export const { setSelectedUsers, clearSelectedUsers } = selectedUsersSlice.actions;
+export const { setSelectedUsers, clearSelectedUsers, removeUser } = selectedUsersSlice.actions;
 export default selectedUsersSlice.reducer;

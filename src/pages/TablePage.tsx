@@ -1,10 +1,11 @@
-// src/pages/TablePage.tsx
 import React, { useState } from 'react';
-import { Button, Flex, Table } from 'antd';
+import { Button, Table, Typography, Card, Space, Flex } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import { useDispatch } from 'react-redux';
-import { setSelectedUsers } from '../store/selectedUsersReducer'
+import { setSelectedUsers } from '../store/selectedUsersReducer';
 import { useNavigate } from 'react-router-dom';
+
+const { Title, Text } = Typography;
 
 type TableRowSelection<T extends object = object> = TableProps<T>['rowSelection'];
 
@@ -51,21 +52,45 @@ const TablePage: React.FC = () => {
   };
 
   return (
-    <Flex gap="middle" vertical>
-      <Button
-        type="primary"
-        disabled={!selectedRowKeys.length}
-        onClick={handleSubmit}
+    <div style={{
+      maxWidth: 1000,
+      margin: '0 auto',
+      padding: '40px 20px',
+    }}>
+      <Card
+        bordered={false}
+        style={{
+          borderRadius: 16,
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        }}
       >
-        Next
-      </Button>
-      <Table
-        rowSelection={rowSelection}
-        columns={columns}
-        dataSource={dataSource}
-        pagination={false}
-      />
-    </Flex>
+        <Space direction="vertical" size="large" style={{ width: '100%' }}>
+          <Title level={3} style={{ marginBottom: 0 }}>📋 Select Users</Title>
+          <Text type="secondary">
+            Jadvaldan bir yoki bir nechta foydalanuvchilarni tanlang va "Next" tugmasi orqali keyingi sahifaga o‘ting.
+          </Text>
+
+          <Table<DataType>
+            rowSelection={rowSelection}
+            columns={columns}
+            dataSource={dataSource}
+            pagination={false}
+            bordered
+            style={{ borderRadius: 12, overflow: 'hidden' }}
+          />
+
+          <div style={{ textAlign: 'right' }}>
+            <Button
+              type="primary"
+              disabled={!selectedRowKeys.length}
+              onClick={handleSubmit}
+            >
+              ➡️ Next
+            </Button>
+          </div>
+        </Space>
+      </Card>
+    </div>
   );
 };
 
